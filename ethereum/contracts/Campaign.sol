@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
     
     function createCampaign(uint minimum) public {
-        address newCampaign = new Campaign(minimum, msg.sender);
+        address newCampaign = address(new Campaign(minimum, msg.sender));
         deployedCampaigns.push(newCampaign);
     }
     
@@ -15,16 +16,18 @@ contract CampaignFactory {
 
 
 contract Campaign {
+    uint numRequests;
+    mapping (uint => Request) requests;
+    
     struct Request {
         string description;
         uint value;
-        address recipient;
+        address payable recipient;
         bool complete;
         uint approvalCount;
         mapping(address => bool) approvals;
     }
 
-    Request[] public requests;
     address public manager;
     uint public minimumContribution;
     mapping(address => bool) public approvers;
@@ -35,7 +38,7 @@ contract Campaign {
         _;
     }
 
-    constructor(uint minimum, address creator) public {
+    constructor(uint minimum, address creator)  {
         manager = creator;
         minimumContribution = minimum;
     }
@@ -47,16 +50,13 @@ contract Campaign {
         approversCount++;
     }
 
-    function createRequest(string description, uint value, address recipient) public restricted {
-        Request memory newRequest = Request({
-           description: description,
-           value: value,
-           recipient: recipient,
-           complete: false,
-           approvalCount: 0
-        });
-
-        requests.push(newRequest);
+    function createRequest(string calldata description, uint value, address payable recipient) public restricted {
+        Request storage r = requests[numRequests++];
+        r.description = description;
+        r.value = value;
+        r.recipient = recipient;
+        r.complete = false;
+        r.approvalCount = 0;
     }
 
     function approveRequest(uint index) public {
@@ -82,14 +82,14 @@ contract Campaign {
     function getSummary() public view returns (uint, uint, uint, uint, address) {
         return (
             minimumContribution, 
-            this.balance, 
-            requests.length, 
+            address(this).balance, 
+            numRequests, 
             approversCount,
             manager
         );
     }
 
     function getRequestsCount() public view returns (uint) {
-        return requests.length;
+        return numRequests;
     }
 }
