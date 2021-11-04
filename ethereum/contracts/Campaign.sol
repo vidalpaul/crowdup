@@ -33,8 +33,13 @@ contract Campaign {
     mapping(address => bool) public approvers;
     uint public approversCount;
 
-    modifier restricted() {
+    modifier restrictedToManager() {
         require(msg.sender == manager);
+        _;
+    }
+
+    modifier restrictedToStakeholder() {
+        require(approvers[msg.sender]);
         _;
     }
 
@@ -50,7 +55,7 @@ contract Campaign {
         approversCount++;
     }
 
-    function createRequest(string calldata description, uint value, address payable recipient) public restricted {
+    function createRequest(string calldata description, uint value, address payable recipient) public restrictedToManager {
         Request storage r = requests[numRequests++];
         r.description = description;
         r.value = value;
@@ -59,7 +64,7 @@ contract Campaign {
         r.approvalCount = 0;
     }
 
-    function approveRequest(uint index) public {
+    function approveRequest(uint index) public restrictedToStakeholder {
         Request storage request = requests[index];
 
         require(approvers[msg.sender]);
@@ -69,7 +74,7 @@ contract Campaign {
         request.approvalCount++;
     }
 
-    function finalizeRequest(uint index) public restricted {
+    function finalizeRequest(uint index) public restrictedToManager {
         Request storage request = requests[index];
 
         require(request.approvalCount > (approversCount / 2));
