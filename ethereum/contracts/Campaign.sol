@@ -10,6 +10,7 @@ contract Campaign {
         uint value;
         address payable recipient;
         bool complete;
+        bool cancelled;
         uint votes;
         uint approvalCount;
         mapping(address => bool) approvals;
@@ -96,6 +97,12 @@ contract Campaign {
         request.complete = true;
     }
 
+    // still to do
+    function cancelRequest(uint index) public restrictedToManager {
+        Request storage request = requests[idx];
+        request.cancelled = true;
+    }
+
     function censorCampaign() public restrictedToCensor {
         require(!isCensored);
         isCensored = true;
@@ -111,6 +118,12 @@ contract Campaign {
         reporters[msg.sender] = true;
         reportCount++;
     }
+
+    function voteToDissolveCampaign() public restrictedToBacker {}
+
+    function initiateBankruptcy() public restrictedToManager {}
+
+    function processBankruptcy() public restrictedToCensor {}
 
     function getSummary() public view returns (uint, uint, uint, uint, address) {
         return (
