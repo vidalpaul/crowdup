@@ -3,9 +3,13 @@ pragma solidity ^0.8.9;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
+
+    constructor() {
+        censor == msg.sender;
+    }
     
     function createCampaign(uint minimum) public {
-        address newCampaign = address(new Campaign(minimum, msg.sender));
+        address newCampaign = address(new Campaign(minimum, msg.sender, censor));
         deployedCampaigns.push(newCampaign);
     }
     
@@ -24,60 +28,83 @@ contract Campaign {
         uint value;
         address payable recipient;
         bool complete;
+        uint votes;
         uint approvalCount;
         mapping(address => bool) approvals;
+        uint rejectionsCount;
+        mapping(addres => bool) rejections;
     }
 
     address public manager;
     uint public minimumContribution;
-    mapping(address => bool) public approvers;
-    uint public approversCount;
+    mapping(address => bool) public backers;
+    uint public backersCount;
 
     modifier restrictedToManager() {
         require(msg.sender == manager);
         _;
     }
 
-    modifier restrictedToStakeholder() {
-        require(approvers[msg.sender]);
+    modifier restrictedToBacker() {
+        require(backers[msg.sender]);
         _;
     }
 
-    constructor(uint minimum, address creator)  {
-        manager = creator;
-        minimumContribution = minimum;
+    modifier restrictedToCensor() {
+        require(msg.sender == censor);
+        _;
+    }
+
+    constructor(uint _minimum, address _creator, address _censor)  {
+        manager = _creator;
+        minimumContribution = _minimum;
+        censor = _censor;
     }
 
     function contribute() public payable {
         require(msg.value > minimumContribution);
 
-        approvers[msg.sender] = true;
-        approversCount++;
+        backers[msg.sender] = true;
+        backersCount++;
     }
 
-    function createRequest(string calldata description, uint value, address payable recipient) public restrictedToManager {
+    function createRequest(string calldata _description, uint _value, address payable _recipient) public restrictedToManager {
         Request storage r = requests[numRequests++];
-        r.description = description;
-        r.value = value;
-        r.recipient = recipient;
+        r.description = _description;
+        r.value = _value;
+        r.recipient = _recipient;
         r.complete = false;
         r.approvalCount = 0;
     }
 
-    function approveRequest(uint index) public restrictedToStakeholder {
+    function approveRequest(uint index) public restrictedToBacker {
         Request storage request = requests[index];
 
-        require(approvers[msg.sender]);
+        require(backers[msg.sender]);
         require(!request.approvals[msg.sender]);
+        require(!request.rejections[msg.sender]);
 
         request.approvals[msg.sender] = true;
         request.approvalCount++;
+        request.votes++;
+    }
+
+    function rejectRequest(uint index) public restrictedToBacker {
+        Request storage request = requests[index];
+
+        require(backers[msg.sender]);
+        require(!request.approvals[msg.sender]);
+        require(!request.rejections[msg.sender]);
+
+        request.rejections[msg.sender] = true;
+        request.rejectionsCount++;
+        request.votes++;
     }
 
     function finalizeRequest(uint index) public restrictedToManager {
         Request storage request = requests[index];
 
-        require(request.approvalCount > (approversCount / 2));
+        require(request.approvalCount > (backersCount / 2));
         require(!request.complete);
 
         request.recipient.transfer(request.value);
@@ -89,7 +116,7 @@ contract Campaign {
             minimumContribution, 
             address(this).balance, 
             numRequests, 
-            approversCount,
+            backersCount,
             manager
         );
     }
