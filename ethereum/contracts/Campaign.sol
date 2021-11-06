@@ -21,7 +21,9 @@ contract Campaign {
     uint public minimumContribution;
     mapping(address => bool) public backers;
     uint public backersCount;
-    bool isCensored;
+    bool public isCensored;
+    uint public reportCount;
+    mapping(address => bool) private reporters;
 
     modifier restrictedToManager() {
         require(msg.sender == manager);
@@ -102,6 +104,12 @@ contract Campaign {
     function unCensorCampaign() public restrictedToCensor {
         require(isCensored);
         isCensored = false;
+    }
+
+    function reportCampaign() public {
+        require(!reporters[msg.sender]);
+        reporters[msg.sender] = true;
+        reportCount++;
     }
 
     function getSummary() public view returns (uint, uint, uint, uint, address) {
