@@ -39,6 +39,7 @@ contract Campaign {
     uint public minimumContribution;
     mapping(address => bool) public backers;
     uint public backersCount;
+    bool isCensored;
 
     modifier restrictedToManager() {
         require(msg.sender == manager);
@@ -109,6 +110,16 @@ contract Campaign {
 
         request.recipient.transfer(request.value);
         request.complete = true;
+    }
+
+    function censorCampaign() public restrictedToCensor {
+        require(!isCensored);
+        isCensored = true;
+    }
+
+    function unCensorCampaign() public restrictedToCensor {
+        require(isCensored);
+        isCensored = false;
     }
 
     function getSummary() public view returns (uint, uint, uint, uint, address) {
