@@ -55,12 +55,6 @@ const MainHeader: React.FC = (props) => {
                   </HeaderGlobalBar>
                </Header>
             </div>
-            <div className='container'>
-               <h1>
-                  CrowUp is the ultimate crowsourcing platform, powered by
-                  Ethereum
-               </h1>
-            </div>
          </Grid>
       </>
    );
