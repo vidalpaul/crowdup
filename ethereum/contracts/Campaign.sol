@@ -15,7 +15,7 @@ contract Campaign {
         uint approvalCount;
         mapping(address => bool) approvals;
         uint rejectionsCount;
-        mapping(addres => bool) rejections;
+        mapping(address => bool) rejections;
     }
 
     address public manager;
@@ -41,10 +41,11 @@ contract Campaign {
         _;
     }
 
-    constructor(uint _minimum, address _creator, address _censor)  {
+    constructor(uint _minimum, address _creator, address _censor, address _factory)  {
         manager = _creator;
         minimumContribution = _minimum;
         censor = _censor;
+        factory = _factory;
     }
 
     function contribute() public payable {
@@ -52,6 +53,8 @@ contract Campaign {
 
         backers[msg.sender] = true;
         backersCount++;
+
+        // update mapping
     }
 
     function createRequest(string calldata _description, uint _value, address payable _recipient) public restrictedToManager {
