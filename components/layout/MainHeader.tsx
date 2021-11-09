@@ -15,7 +15,7 @@ import Search20 from '@carbon/icons-react/lib/search/20';
 import Notification20 from '@carbon/icons-react/lib/notification/20';
 import AppSwitcher20 from '@carbon/icons-react/lib/app-switcher/20';
 
-const MainHeader = () => {
+const MainHeader: React.FC = (props) => {
    return (
       <>
          <Grid className='bx--grid--full-width'>
