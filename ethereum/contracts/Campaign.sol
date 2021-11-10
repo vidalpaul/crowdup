@@ -19,12 +19,15 @@ contract Campaign {
     }
 
     address public manager;
+    address public globalManager;
+    address public factory;
     uint public minimumContribution;
     mapping(address => bool) public backers;
     uint public backersCount;
     bool public isCensored;
     uint public reportCount;
     mapping(address => bool) private reporters;
+    mapping(address => bool) public compensatedBackers;
 
     enum status {OPEN, CENSORED, DISSOLVED, FINISHED}
     status public campaignStatus;
@@ -45,7 +48,7 @@ contract Campaign {
     }
 
     modifier validCampaign() {
-        require(campaignStatus == OPEN);
+        require(campaignStatus == status.OPEN);
         _;
     }
 
@@ -54,7 +57,7 @@ contract Campaign {
         minimumContribution = _minimum;
         globalManager = _globalManager;
         factory = _factory;
-        campaignStatus = OPEN;
+        campaignStatus = status.OPEN;
     }
 
     function contribute() public payable validCampaign {
@@ -117,11 +120,13 @@ contract Campaign {
 
     function censorCampaign() public restrictedToGlobalManager {
         require(!isCensored);
+        campaignStatus == status.CENSORED;
         isCensored = true;
     }
 
     function unCensorCampaign() public restrictedToGlobalManager {
         require(isCensored);
+        campaignStatus == status.OPEN;
         isCensored = false;
     }
 
@@ -131,11 +136,23 @@ contract Campaign {
         reportCount++;
     }
 
-    function voteToDissolveCampaign() public restrictedToBacker {}
+    // function voteToDissolveCampaign() public restrictedToBacker {}
 
-    function initiateBankruptcy() public restrictedToManager {}
+    function initiateBankruptcy() public restrictedToManager {
+        campaignStatus = status.DISSOLVED;
+    }
 
-    function processBankruptcy() public restrictedToGlobalManager {}
+    // function processBankruptcy() public restrictedToGlobalManager {
+    //     require(campaignStatus == status.DISSOLVED);
+    // }
+
+    function getMoneyBack() public payable restrictedToBacker {
+        require(!compensatedBackers[msg.sender]);
+        require(campaignStatus == status.DISSOLVED);
+        
+        compensatedBackers[msg.sender] = true;
+        payable(msg.sender).transfer(address(this).balance/backersCount);
+    }
 
     function getSummary() public view returns (uint, uint, uint, uint, address) {
         return (
