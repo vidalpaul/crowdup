@@ -26,6 +26,9 @@ contract Campaign {
     uint public reportCount;
     mapping(address => bool) private reporters;
 
+    enum status {OPEN, CENSORED, DISSOLVED, FINISHED}
+    status public campaignStatus;
+
     modifier restrictedToManager() {
         require(msg.sender == manager);
         _;
@@ -36,19 +39,25 @@ contract Campaign {
         _;
     }
 
-    modifier restrictedToCensor() {
-        require(msg.sender == censor);
+    modifier restrictedToGlobalManager() {
+        require(msg.sender == globalManager);
         _;
     }
 
-    constructor(uint _minimum, address _creator, address _censor, address _factory)  {
-        manager = _creator;
-        minimumContribution = _minimum;
-        censor = _censor;
-        factory = _factory;
+    modifier validCampaign() {
+        require(campaignStatus == OPEN);
+        _;
     }
 
-    function contribute() public payable {
+    constructor(uint _minimum, address _creator, address _globalManager, address _factory)  {
+        manager = _creator;
+        minimumContribution = _minimum;
+        globalManager = _globalManager;
+        factory = _factory;
+        campaignStatus = OPEN;
+    }
+
+    function contribute() public payable validCampaign {
         require(msg.value > minimumContribution);
 
         backers[msg.sender] = true;
@@ -57,7 +66,7 @@ contract Campaign {
         // update mapping
     }
 
-    function createRequest(string calldata _description, uint _value, address payable _recipient) public restrictedToManager {
+    function createRequest(string calldata _description, uint _value, address payable _recipient) public restrictedToManager validCampaign {
         Request storage r = requests[numRequests++];
         r.description = _description;
         r.value = _value;
@@ -66,7 +75,7 @@ contract Campaign {
         r.approvalCount = 0;
     }
 
-    function approveRequest(uint index) public restrictedToBacker {
+    function approveRequest(uint index) public restrictedToBacker validCampaign {
         Request storage request = requests[index];
 
         require(backers[msg.sender]);
@@ -78,7 +87,7 @@ contract Campaign {
         request.votes++;
     }
 
-    function rejectRequest(uint index) public restrictedToBacker {
+    function rejectRequest(uint index) public restrictedToBacker validCampaign {
         Request storage request = requests[index];
 
         require(backers[msg.sender]);
@@ -90,8 +99,8 @@ contract Campaign {
         request.votes++;
     }
 
-    function finalizeRequest(uint index) public restrictedToManager {
-        Request storage request = requests[index];
+    function finalizeRequest(uint idx) public restrictedToManager validCampaign {
+        Request storage request = requests[idx];
 
         require(request.approvalCount > (backersCount / 2));
         require(!request.complete);
@@ -101,17 +110,17 @@ contract Campaign {
     }
 
     // still to do
-    function cancelRequest(uint index) public restrictedToManager {
+    function cancelRequest(uint idx) public restrictedToManager validCampaign {
         Request storage request = requests[idx];
         request.cancelled = true;
     }
 
-    function censorCampaign() public restrictedToCensor {
+    function censorCampaign() public restrictedToGlobalManager {
         require(!isCensored);
         isCensored = true;
     }
 
-    function unCensorCampaign() public restrictedToCensor {
+    function unCensorCampaign() public restrictedToGlobalManager {
         require(isCensored);
         isCensored = false;
     }
@@ -126,7 +135,7 @@ contract Campaign {
 
     function initiateBankruptcy() public restrictedToManager {}
 
-    function processBankruptcy() public restrictedToCensor {}
+    function processBankruptcy() public restrictedToGlobalManager {}
 
     function getSummary() public view returns (uint, uint, uint, uint, address) {
         return (

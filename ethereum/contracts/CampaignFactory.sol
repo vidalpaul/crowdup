@@ -6,11 +6,12 @@ contract CampaignFactory {
     address[] public deployedCampaigns;
 
     constructor() {
-        censor == msg.sender;
+        globalManager == msg.sender;
     }
     
     function createCampaign(uint minimum) public {
-        address newCampaign = address(new Campaign(minimum, msg.sender, censor, address(this)));
+        // todo: require msg.sender is not blocked account
+        address newCampaign = address(new Campaign(minimum, msg.sender, globalManager, address(this)));
         deployedCampaigns.push(newCampaign);
         campaignsByManager[msg.sender].push(newCampaign);
         // todo: update campaignsByManager mapping in Global.sol

@@ -7,11 +7,13 @@ contract Global {
     mapping(address => bool) public blockedAddresses;
     address public siteManager;
 
+    enum blockAccountReasons {}
+
     constructor() {
         siteManager = msg.sender;
     }
 
-    modifier restricted {
+    modifier restricted() {
         require(msg.sender == siteManager);
         _;
     }
