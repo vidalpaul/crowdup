@@ -1,9 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+contract DeployedFactory {
+
+}
+
 contract Campaign {
     uint numRequests;
     mapping (uint => Request) requests;
+    address public manager;
+    address public globalManager;
+    address public factory;
+    string public description;
+    uint public minimumContribution;
+    mapping(address => bool) public backers;
+    uint public backersCount;
+    bool public isCensored;
+    uint public reportCount;
+    mapping(address => bool) private reporters;
+    mapping(address => bool) public compensatedBackers;
+    DeployedFactory df;
+
+    enum status {OPEN, CENSORED, DISSOLVED, FINISHED}
+    status public campaignStatus;
     
     struct Request {
         string description;
@@ -18,19 +37,7 @@ contract Campaign {
         mapping(address => bool) rejections;
     }
 
-    address public manager;
-    address public globalManager;
-    address public factory;
-    uint public minimumContribution;
-    mapping(address => bool) public backers;
-    uint public backersCount;
-    bool public isCensored;
-    uint public reportCount;
-    mapping(address => bool) private reporters;
-    mapping(address => bool) public compensatedBackers;
 
-    enum status {OPEN, CENSORED, DISSOLVED, FINISHED}
-    status public campaignStatus;
 
     modifier restrictedToManager() {
         require(msg.sender == manager);
@@ -52,12 +59,14 @@ contract Campaign {
         _;
     }
 
-    constructor(uint _minimum, address _creator, address _globalManager, address _factory)  {
+    constructor(uint _minimum, address _creator, address _globalManager, address _factory, string memory _description)  {
         manager = _creator;
         minimumContribution = _minimum;
         globalManager = _globalManager;
         factory = _factory;
+        description = _description;
         campaignStatus = status.OPEN;
+        isCensored = false;
     }
 
     function contribute() public payable validCampaign {
@@ -66,7 +75,9 @@ contract Campaign {
         backers[msg.sender] = true;
         backersCount++;
 
-        // update mapping
+        // update campaignsByContributor mapping in factory
+        campaignsByContributor[msg.sender].push(address(this));
+        
     }
 
     function createRequest(string calldata _description, uint _value, address payable _recipient) public restrictedToManager validCampaign {
