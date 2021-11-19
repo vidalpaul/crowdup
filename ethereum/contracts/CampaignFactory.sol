@@ -9,9 +9,10 @@ contract CampaignFactory {
     address public siteManager;
     address[] public deployedCampaigns;
 
-    enum blockAccountReasons {}
+    enum blockAccountReasons {REPORTED_BY_COMMUNITY, JUDICIAL, UNSUCCESSFUL}
 
     constructor() {
+        // siteManager account can block Ethereum addresses, dissolve campaigns
         siteManager == msg.sender;
     }
 
@@ -49,7 +50,7 @@ contract CampaignFactory {
     }
 
     function updateCampaignsByContributor(address _contributor, address _campaign) public {
-        // !+this is not optimal
+        // an array in this case is actually ok
         require(!campaingsByContributor[_contributor]);
     }
 
