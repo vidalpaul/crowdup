@@ -21,7 +21,7 @@ contract Campaign {
     mapping(address => bool) public compensatedBackers;
     DeployedFactory df;
 
-    enum status {OPEN, CENSORED, DISSOLVED, FINISHED}
+    enum Status {OPEN, CENSORED, DISSOLVED, FINISHED}
     status public campaignStatus;
     
     struct Request {
