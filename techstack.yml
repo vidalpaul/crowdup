@@ -1,0 +1,269 @@
+repo_name: vidalpaul/crowdup
+report_id: 93a88b37e4547fc02782f8a834ce6fb9
+version: 0.1
+repo_type: Public
+timestamp: '2024-04-15T01:16:05+00:00'
+requested_by: vidalpaul
+provider: github
+branch: main
+detected_tools_count: 20
+tools:
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/vidalpaul/crowdup
+  detection_source: Repo Metadata
+- name: TypeScript
+  description: A superset of JavaScript that compiles to clean JavaScript output
+  website_url: http://www.typescriptlang.org
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1612/bynNY5dJ.jpg
+  detection_source_url: https://github.com/vidalpaul/crowdup
+  detection_source: Repo Metadata
+- name: Next.js
+  description: A small framework for server-rendered universal JavaScript apps
+  website_url: https://nextjs.org/
+  version: 12.0.1
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/5936/nextjs.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-28 20:38:22.000000000 Z
+- name: Node.js
+  description: A platform built on Chrome's JavaScript runtime for easily building
+    fast, scalable network applications
+  website_url: http://nodejs.org/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1011/n1JRsFeB_400x400.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-28 20:38:22.000000000 Z
+- name: React
+  description: A JavaScript library for building user interfaces
+  website_url: https://reactjs.org/
+  version: 17.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript UI Libraries
+  image_url: https://img.stackshare.io/service/1020/OYIaJ1KK.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: Sass
+  description: Syntactically Awesome Style Sheets
+  website_url: http://sass-lang.com/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: CSS Pre-processors / Extensions
+  image_url: https://img.stackshare.io/service/1171/jCR2zNJV.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-28 20:38:22.000000000 Z
+- name: MongoDB
+  description: The database for giant ideas
+  website_url: http://www.mongodb.com/
+  version: 4.1.4
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1030/leaf-360x360.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-11-04 22:42:35.000000000 Z
+- name: ESLint
+  description: The fully pluggable JavaScript code quality tool
+  website_url: http://eslint.org/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Code Review
+  image_url: https://img.stackshare.io/service/3337/Q4L7Jncy.jpg
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-28 20:38:22.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/vidalpaul/crowdup
+  detection_source: Repo Metadata
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-28 20:38:22.000000000 Z
+- name: solidity
+  description: How people build software
+  website_url: https://ethereum.github.io/solidity/
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/4959/1__IS8pZzkhvd6kUbSFpSgag.png
+  detection_source_url: https://github.com/vidalpaul/crowdup
+  detection_source: Repo Metadata
+- name: web3
+  website_url: https://github.com/ethereum/web3.js/
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/8418/no-img-open-source.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: web3
+  description: Ethereum JavaScript API
+  package_url: https://www.npmjs.com/web3
+  version: 1.2.1
+  license: LGPL-3.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16369/default_17385ab3aa01d4c295c08d4a9736140df691c5e9.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+  vulnerabilities:
+  - name: Insecure Credential Storage in web3
+    cve_id:
+    cve_url: https://github.com/advisories/GHSA-27v7-qhfv-rqq8
+    detected_date: Aug 22
+    severity: low
+    first_patched:
+- name: "@types/node"
+  description: TypeScript definitions for Node.js
+  package_url: https://www.npmjs.com/@types/node
+  version: 16.11.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15809/default_5e5e8ac63beda29f31f1844df64d4b8247570a66.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-30 16:30:04.000000000 Z
+- name: "@types/react"
+  description: TypeScript definitions for React
+  package_url: https://www.npmjs.com/@types/react
+  version: 17.0.33
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15894/default_1d65e37e65b7f80761374f0202776043277d505d.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: eslint-config-next
+  description: ESLint configuration used by Next.js
+  package_url: https://www.npmjs.com/eslint-config-next
+  version: 12.0.1
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/npm/image.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-11-10 21:59:47.000000000 Z
+- name: ganache-cli
+  description: '&lt;p align="center"&gt; &lt;em&gt;NOTICE&lt;/em&gt;: &lt;code&gt;testrpc&lt;/code&gt;
+    is now &lt;code&gt;ganache-cli&lt;/code&gt;'
+  package_url: https://www.npmjs.com/ganache-cli
+  version: 6.12.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17271/default_b2015e9577d171c4c3f12c3c8d253c01fe63ba8d.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: react-dom
+  description: React package for working with the DOM
+  package_url: https://www.npmjs.com/react-dom
+  version: 17.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15808/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: solc
+  description: Solidity compiler
+  package_url: https://www.npmjs.com/solc
+  version: 0.8.10
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17248/default_8da30b412bf0dbb63f862bee0dfab0a32df2fb69.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
+- name: truffle-hdwallet-provider
+  description: HD Wallet-enabled Web3 provider
+  package_url: https://www.npmjs.com/truffle-hdwallet-provider
+  version: 1.0.17
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17771/default_2a0f136cfb588dd9053268b73a18a953e8d65590.png
+  detection_source_url: https://github.com/vidalpaul/crowdup/blob/main/package-lock.json
+  detection_source: package.json
+  last_updated_by: Paulo Vidal
+  last_updated_on: 2021-10-31 18:48:27.000000000 Z
